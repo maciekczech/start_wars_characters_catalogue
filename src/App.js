@@ -5,7 +5,7 @@ import CharactersList from './containers/CharactersList/CharactersList';
 function App() {
 	return (
 		<Layout>
-			<button>asdas</button>
+			<CharactersList></CharactersList>
 		</Layout>
 	);
 }

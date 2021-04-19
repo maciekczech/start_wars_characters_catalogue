@@ -1,0 +1,7 @@
+.Character {
+	display: flex;
+	flex-direction: column;
+	margin: 10px 8px;
+	border: 1px solid #ccc;
+	padding: 0.3rem 0.5rem;
+}
