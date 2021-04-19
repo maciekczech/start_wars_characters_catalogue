@@ -1,7 +1,13 @@
-import './App.css';
+import React from 'react';
+import Layout from './components/Layout/Layout';
+import CharactersList from './containers/CharactersList/CharactersList';
 
 function App() {
-	return <div className="App"></div>;
+	return (
+		<Layout>
+			<button>asdas</button>
+		</Layout>
+	);
 }
 
 export default App;
