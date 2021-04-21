@@ -45,9 +45,8 @@ export const fetchCharacters = quantity => {
 	return (dispatch, getState) => {
 		dispatch(fetchCharactersStart());
 		//getting URL from state
-		const URL = getState().nextPage;
+		const URL = getState().nextPage.replace(/^http:\/\//i, 'https://');
 		//change to https due to firebase restrictions
-		URL.replace(/^http:\/\//i, 'https://');
 		//fetching the first page of the SW API
 		return axios
 			.get(URL)
