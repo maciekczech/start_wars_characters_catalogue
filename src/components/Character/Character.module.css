@@ -1,7 +1,58 @@
-.Character {
+.CharacterDefault {
 	display: flex;
-	flex-direction: column;
-	margin: 10px 8px;
+	flex-flow: column wrap;
+	margin: 2rem 10rem;
+	width: 25%;
+	height: 140px;
 	border: 1px solid #ccc;
-	padding: 0.3rem 0.5rem;
+	border-radius: 2rem;
+	-webkit-box-shadow: 1px 1px 16px 0px rgba(47, 249, 36, 0.76);
+	box-shadow: 1px 1px 16px 0px rgba(47, 249, 36, 0.76);
+	background-color: rgba(33, 37, 41, 0.6);
+	color: #fca311;
+	transition: width 400ms, height 400ms, position 400ms, margin 400ms,
+		box-shadow 800ms;
+}
+.CharacterExpanded {
+	width: 40%;
+	height: 200px;
+	margin: 2rem 1rem;
+	padding: 0;
+	transition: width 400ms, height 400ms, position 400ms, margin 400ms,
+		box-shadow 800ms;
+	-webkit-box-shadow: 1px 1px 16px 0px rgba(235, 33, 46, 1);
+	box-shadow: 1px 1px 16px 0px rgba(235, 33, 46, 1);
+}
+
+.NameContainer {
+}
+
+.Name {
+	margin: 0.5rem 1rem 0.5rem 1rem;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	font-size: 28px;
+}
+
+.RestContainer {
+	margin: 0.5rem 0 1rem 1rem;
+}
+
+.Gender {
+}
+
+.Born {
+}
+
+.Height {
+}
+
+.Logo {
+	margin-right: 0.5rem;
+}
+
+p {
+	margin: 0;
+	padding: 0;
 }

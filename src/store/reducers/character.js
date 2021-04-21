@@ -5,13 +5,31 @@ const initialState = {
 	initialQuantity: 10,
 	characters: [],
 	loading: false,
+	loadingMore: false,
 	error: null,
+	nextPage: 'http://swapi.dev/api/people/?page=1',
+};
+
+const fetchCharactersStart = (state, payload) => {
+	//if characters array is empty I want to set my 'loading' value to true
+	//if characters array is NOT empty I want to set my 'loadingMore' value to true
+	const loadingValue = state.characters.length === 0;
+	return updateObject(state, {
+		error: payload,
+		loading: loadingValue,
+		loadingMore: !loadingValue,
+	});
 };
 
 const fetchCharactersSuccess = (state, payload) => {
+	const updatedCharacters = state.characters.concat(payload.characters);
+	//if characters array is empty I want to set my 'loading' value to true
+	//if characters array is NOT empty I want to set my 'loadingMore' value to true
+	const loadingValue = state.characters.length === 0;
 	return updateObject(state, {
-		characters: payload.characters,
-		loading: false,
+		characters: updatedCharacters,
+		nextPage: payload.nextPage,
+		loadingMore: false,
 	});
 };
 
@@ -50,7 +68,7 @@ const expandCharacter = (state, payload) => {
 const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case actionTypes.FETCH_CHARACTERS_START:
-			return updateObject(state, { loading: true });
+			return fetchCharactersStart(state, payload);
 
 		case actionTypes.FETCH_CHARACTERS_SUCCESS:
 			return fetchCharactersSuccess(state, payload);

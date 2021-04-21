@@ -43,16 +43,21 @@ export const fetchFilmsFailed = payload => {
 };
 
 export const fetchCharacters = quantity => {
-	return dispatch => {
+	return (dispatch, getState) => {
 		dispatch(fetchCharactersStart());
-		//fetch the first page of the SW API
-		return axios_characters
-			.get('/?page=1')
+		//getting URL from state
+		const URL = getState().nextPage;
+		//fetching the first page of the SW API
+		return axios
+			.get(URL)
 			.then(response => {
+				console.log(response);
 				//dispatch Success action if everything went well
 				dispatch(
 					fetchCharactersSuccess({
+						//passining data about chararters along with next page URL
 						characters: response.data.results,
+						nextPage: response.data.next,
 					}),
 				);
 			})

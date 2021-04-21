@@ -1,0 +1,26 @@
+.CharacterList {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: baseline;
+	justify-content: center;
+	margin: 0;
+	padding: 2rem 0;
+}
+
+.ButtonContainer {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2rem;
+}
+
+.Button {
+	background-color: transparent;
+	border-radius: 0.5rem;
+	border: none;
+	color: #ced4da;
+	outline: auto;
+	cursor: pointer;
+	font: inherit;
+	padding: 12px;
+	font-weight: bold;
+}
