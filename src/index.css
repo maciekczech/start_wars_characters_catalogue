@@ -4,7 +4,8 @@ body {
 	margin: 0;
 	height: 100%;
 	width: 100%;
-	background-image: url('./images/stars2.jpg');
+	/* image downloaded from google ¯\_(ツ)_/¯ */
+	background-image: url('./images/stars.jpg');
 	background-position: center;
 	background-size: cover;
 	background-attachment: fixed;

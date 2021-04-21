@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import axios_characters from './../../axios-characters';
 import axios from 'axios';
 
 export const fetchCharactersStart = () => {
@@ -128,9 +127,21 @@ export const fetchCharactersAndFilms = quantity => {
 	};
 };
 
-export const expandCharacter = name => {
+export const expandCharacterToggle = name => {
 	return {
-		type: actionTypes.EXPAND_CHARACTER,
+		type: actionTypes.EXPAND_CHARACTER_TOGGLE,
 		payload: { name: name },
+	};
+};
+
+export const expandAll = () => {
+	return {
+		type: actionTypes.EXPAND_ALL,
+	};
+};
+
+export const shrinkAll = () => {
+	return {
+		type: actionTypes.SHRINK_ALL,
 	};
 };

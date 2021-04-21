@@ -1,8 +1,9 @@
 .CharacterDefault {
 	display: flex;
-	flex-flow: column wrap;
-	margin: 2rem 10rem;
-	width: 25%;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 2rem 8rem;
+	width: 30%;
 	height: 140px;
 	border: 1px solid #ccc;
 	border-radius: 2rem;
@@ -11,20 +12,18 @@
 	background-color: rgba(33, 37, 41, 0.6);
 	color: #fca311;
 	transition: width 400ms, height 400ms, position 400ms, margin 400ms,
-		box-shadow 800ms;
+		border 400ms, box-shadow 800ms;
 }
 .CharacterExpanded {
 	width: 40%;
 	height: 200px;
 	margin: 2rem 1rem;
 	padding: 0;
+	border: 1px solid #343a40;
 	transition: width 400ms, height 400ms, position 400ms, margin 400ms,
-		box-shadow 800ms;
+		border 400ms, box-shadow 800ms;
 	-webkit-box-shadow: 1px 1px 16px 0px rgba(235, 33, 46, 1);
 	box-shadow: 1px 1px 16px 0px rgba(235, 33, 46, 1);
-}
-
-.NameContainer {
 }
 
 .Name {
@@ -39,13 +38,8 @@
 	margin: 0.5rem 0 1rem 1rem;
 }
 
-.Gender {
-}
-
-.Born {
-}
-
-.Height {
+.FilmsContainer {
+	margin-right: 2rem;
 }
 
 .Logo {
@@ -55,4 +49,19 @@
 p {
 	margin: 0;
 	padding: 0;
+}
+
+@media screen and (max-width: 700px) {
+	.CharacterDefault {
+		width: 60%;
+		height: 140px;
+		margin: 1rem;
+	}
+	.CharacterExpanded {
+		width: 90%;
+		height: 200px;
+	}
+	.Name {
+		font-size: 20px;
+	}
 }

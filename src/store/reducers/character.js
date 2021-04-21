@@ -23,9 +23,6 @@ const fetchCharactersStart = (state, payload) => {
 
 const fetchCharactersSuccess = (state, payload) => {
 	const updatedCharacters = state.characters.concat(payload.characters);
-	//if characters array is empty I want to set my 'loading' value to true
-	//if characters array is NOT empty I want to set my 'loadingMore' value to true
-	const loadingValue = state.characters.length === 0;
 	return updateObject(state, {
 		characters: updatedCharacters,
 		nextPage: payload.nextPage,
@@ -48,7 +45,7 @@ const fetchFilmsFailed = (state, payload) => {
 	return updateObject(state, { error: payload, loading: false });
 };
 
-const expandCharacter = (state, payload) => {
+const expandCharacterToggle = (state, payload) => {
 	const indexOfElementToBeExpanded = state.characters.findIndex(
 		el => el.name === payload.name,
 	);
@@ -62,6 +59,22 @@ const expandCharacter = (state, payload) => {
 		//adding new 'expanded' field to the clicked element of the array or toggling it to true
 		tempCharacters[indexOfElementToBeExpanded].expanded = true;
 	}
+	return updateObject(state, { characters: tempCharacters });
+};
+
+const expandAll = state => {
+	const tempCharacters = state.characters.slice();
+	tempCharacters.forEach(el => {
+		el.expanded = true;
+	});
+	return updateObject(state, { characters: tempCharacters });
+};
+
+const shrinkAll = state => {
+	const tempCharacters = state.characters.slice();
+	tempCharacters.forEach(el => {
+		el.expanded = false;
+	});
 	return updateObject(state, { characters: tempCharacters });
 };
 
@@ -85,8 +98,14 @@ const reducer = (state = initialState, { type, payload }) => {
 		case actionTypes.FETCH_FILMS_FAILED:
 			return fetchFilmsFailed(state, payload);
 
-		case actionTypes.EXPAND_CHARACTER:
-			return expandCharacter(state, payload);
+		case actionTypes.EXPAND_CHARACTER_TOGGLE:
+			return expandCharacterToggle(state, payload);
+
+		case actionTypes.EXPAND_ALL:
+			return expandAll(state);
+
+		case actionTypes.SHRINK_ALL:
+			return shrinkAll(state);
 
 		default:
 			return state;

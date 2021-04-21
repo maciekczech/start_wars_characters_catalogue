@@ -1,2 +1,7 @@
 //exports all the actions from one, easily accessible place
-export { fetchCharactersAndFilms, expandCharacter } from './character';
+export {
+	fetchCharactersAndFilms,
+	expandCharacterToggle,
+	expandAll,
+	shrinkAll,
+} from './character';

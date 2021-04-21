@@ -3,10 +3,17 @@ import Character from './../../components/Character/Character';
 //fetchCharacters action imported from /store/actions/index.js
 import {
 	fetchCharactersAndFilms,
-	expandCharacter,
+	expandCharacterToggle,
+	expandAll,
+	shrinkAll,
 } from './../../store/actions/';
 import Spinner from './../../components/UI/Spinner/Spinner';
 import classes from './CharactersList.module.css';
+
+import withErrorHandler from './../../hoc/withErrorHandler/withErrorHandler';
+import axios from 'axios';
+
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { connect } from 'react-redux';
 
@@ -24,21 +31,16 @@ export class CharactersList extends Component {
 		console.log(this.props.quantity);
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if (prevState.currentQuantity !== this.state.currentQuantity) {
-			console.log(
-				`length of array ${this.props.characters.length} currentQuantity ${this.state.currentQuantity}`,
-			);
-			if (this.props.characters.length < this.state.currentQuantity) {
-				this.props.loadCharacters(this.props.quantity);
-			}
-		}
-	}
-
 	loadMoreItems = () => {
-		//increment the current Quantity by a step value
-		//using callback to make sure that Im working on the latest state
-		//as long as this is async state call, I'll react to that change in componentDidUpdate()
+		//first check whether characters array includes less elements that required to display 5 more
+		//I fetch 10 items per each request hence every other button click we will not need to fetch data, instead we only display what's inside the array
+		if (
+			this.props.characters.length <
+			this.state.currentQuantity + this.state.step
+		) {
+			this.props.loadCharacters(this.props.quantity);
+		}
+		//then increment the current Quantity by a step value
 		this.setState(state => {
 			return { currentQuantity: (state.currentQuantity += state.step) };
 		});
@@ -64,12 +66,58 @@ export class CharactersList extends Component {
 							films={ch.filmTitles}
 							birth={ch.birth_year}></Character>
 					);
+				} else {
+					return null;
 				}
 			});
 		}
 		return (
 			<>
-				<div className={classes.CharacterList}>{charactersElement}</div>{' '}
+				<div className={classes.ButtonContainer}>
+					<button
+						className={[classes.Button, classes.NavButtons].join(
+							' ',
+						)}
+						onClick={this.props.expandAll}
+						type="button">
+						Expand All
+					</button>
+					<button
+						className={[classes.Button, classes.NavButtons].join(
+							' ',
+						)}
+						onClick={this.props.shrinkAll}
+						type="button">
+						Shrink All
+					</button>
+				</div>
+				<div className={classes.CharacterList}>{charactersElement}</div>
+				{/* had some issue with the Infinite scroll so I left it commented out and sticked with good old Button */}
+				{/* 				<InfiniteScroll
+					dataLength={this.state.currentQuantity}
+					next={() => this.props.loadCharacters(this.props.quantity)}
+					hasMore={true}
+					loader={<Spinner />}>
+					<div className={classes.CharacterList}>
+						{this.props.characters.map((ch, index) => {
+							//if (index < this.state.currentQuantity) {
+							return (
+								<Character
+									key={index}
+									clicked={() =>
+										this.props.markAsClicked(ch.name)
+									}
+									expanded={ch.expanded}
+									height={ch.height}
+									name={ch.name}
+									gender={ch.gender}
+									films={ch.filmTitles}
+									birth={ch.birth_year}></Character>
+							);
+							//}
+						})}
+					</div>
+				</InfiniteScroll> */}
 				<div className={classes.ButtonContainer}>
 					<button
 						className={classes.Button}
@@ -96,8 +144,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		loadCharacters: quantity => dispatch(fetchCharactersAndFilms(quantity)),
-		markAsClicked: name => dispatch(expandCharacter(name)),
+		markAsClicked: name => dispatch(expandCharacterToggle(name)),
+		expandAll: () => dispatch(expandAll()),
+		shrinkAll: () => dispatch(shrinkAll()),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharactersList);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(withErrorHandler(CharactersList, axios));

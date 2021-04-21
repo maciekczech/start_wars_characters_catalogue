@@ -4,7 +4,7 @@
 	align-items: baseline;
 	justify-content: center;
 	margin: 0;
-	padding: 2rem 0;
+	padding: 0 0;
 }
 
 .ButtonContainer {
@@ -23,4 +23,8 @@
 	font: inherit;
 	padding: 12px;
 	font-weight: bold;
+}
+
+.NavButtons {
+	margin: 2rem 1rem 0 1rem;
 }
