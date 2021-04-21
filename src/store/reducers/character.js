@@ -7,7 +7,7 @@ const initialState = {
 	loading: false,
 	loadingMore: false,
 	error: null,
-	nextPage: 'http://swapi.dev/api/people/?page=1',
+	nextPage: 'https://swapi.dev/api/people/?page=1',
 };
 
 const fetchCharactersStart = (state, payload) => {

@@ -46,11 +46,12 @@ export const fetchCharacters = quantity => {
 		dispatch(fetchCharactersStart());
 		//getting URL from state
 		const URL = getState().nextPage;
+		//change to https due to firebase restrictions
+		URL.replace(/^http:\/\//i, 'https://');
 		//fetching the first page of the SW API
 		return axios
 			.get(URL)
 			.then(response => {
-				console.log(response);
 				//dispatch Success action if everything went well
 				dispatch(
 					fetchCharactersSuccess({
@@ -74,8 +75,12 @@ export const fetchFilms = results => {
 		//creating array of axios.get() Promises for every character 'name'
 		const filmsURLArray = resultsCopy.map(result => {
 			const { name, films } = result;
+			//change to https due to firebase restrictions
+			const httpsFilms = films.map(el => {
+				return el.replace(/^http:\/\//i, 'https://');
+			});
 			//creating Promise for every film to be fetched
-			const axiosGetFilmPromise = films.map(film => axios.get(film));
+			const axiosGetFilmPromise = httpsFilms.map(film => axios.get(film));
 			//adding name to the array so that later on I'm able to determine who is who and what should go where
 			axiosGetFilmPromise.push(name);
 			return axiosGetFilmPromise;

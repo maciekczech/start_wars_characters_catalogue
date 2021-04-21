@@ -13,8 +13,6 @@ import classes from './CharactersList.module.css';
 import withErrorHandler from './../../hoc/withErrorHandler/withErrorHandler';
 import axios from 'axios';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
-
 import { connect } from 'react-redux';
 
 export class CharactersList extends Component {
@@ -28,7 +26,6 @@ export class CharactersList extends Component {
 
 	componentDidMount() {
 		this.props.loadCharacters(this.props.quantity);
-		console.log(this.props.quantity);
 	}
 
 	loadMoreItems = () => {
