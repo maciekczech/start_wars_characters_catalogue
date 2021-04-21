@@ -19,13 +19,32 @@ const fetchCharactersFailed = (state, payload) => {
 	return updateObject(state, { error: payload, loading: false });
 };
 
+const fetchFilmsSuccess = (state, payload) => {
+	return updateObject(state, {
+		characters: payload.characters,
+		loading: false,
+	});
+};
+
+const fetchFilmsFailed = (state, payload) => {
+	return updateObject(state, { error: payload, loading: false });
+};
+
 const expandCharacter = (state, payload) => {
-	const indexOfElementToBeExpanded = state.characters.find(
+	const indexOfElementToBeExpanded = state.characters.findIndex(
 		el => el.name === payload.name,
 	);
-	console.log(indexOfElementToBeExpanded);
-	return { ...state };
-	//dodaj do tego elementy specjalne pole na podstawie którego będziesz zmieniał właściwości na końcu drzewa componentów
+	//copying characters from state to make sure to not mutate the state accidentally
+	const tempCharacters = state.characters.slice();
+	//checking whether custom 'expanded' field has already been added (or has a false value) to subjected Character
+	if (tempCharacters[indexOfElementToBeExpanded].expanded) {
+		//toggling value back to false
+		tempCharacters[indexOfElementToBeExpanded].expanded = false;
+	} else {
+		//adding new 'expanded' field to the clicked element of the array or toggling it to true
+		tempCharacters[indexOfElementToBeExpanded].expanded = true;
+	}
+	return updateObject(state, { characters: tempCharacters });
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -38,6 +57,15 @@ const reducer = (state = initialState, { type, payload }) => {
 
 		case actionTypes.FETCH_CHARACTERS_FAILED:
 			return fetchCharactersFailed(state, payload);
+
+		case actionTypes.FETCH_FILMS_START:
+			return { ...state };
+
+		case actionTypes.FETCH_FILMS_SUCCESS:
+			return fetchFilmsSuccess(state, payload);
+
+		case actionTypes.FETCH_FILMS_FAILED:
+			return fetchFilmsFailed(state, payload);
 
 		case actionTypes.EXPAND_CHARACTER:
 			return expandCharacter(state, payload);
